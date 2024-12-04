@@ -1,80 +1,120 @@
-# Capstone Project
+# I-405 Traffic Flow Forecasting
 
-Your Capstone project is the culmination of your time at GA. You will be tasked with developing an interesting question, collecting the data required to model that data, developing the strongest model (or models) for prediction, and communicating those findings to other data scientists and non-technical individuals. This introductory document lays out the five check-ins for the project and their due dates.
+## [Part 1: Intro and Data Cleaning](code/01-Intro-and-data-cleaning.ipynb)
+---
+### 1. Introduction 
 
-## Your Deliverables
+#### Problem Statement
 
-- A well-made predictive model using either structured or unstructured machine learning techniques (or other technique approved in advanced by the instructors), as well as clean, well-written code.
-- A technical report aimed at fellow data scientists that explains your process and findings.
-- A public presentation of your findings aimed primarily at laypeople.
+Traffic congestion on the I-405 Freeway in Los Angeles area is a significant challenge, impacting travel times, air quality, and overall commuter experience. The dynamic nature of traffic flow is influenced by numerous factors, including time of day, day of the week, special events(holidays, constructions), and weather conditions. Predicting future traffic flow accurately can enable better traffic operation management, early warnings for congestion, and optimized route planning.
 
-### **[Capstone, Part 1: Topic Ideas](./part_01/)**
+This study aims to compare and evaluate the performance of three prediction models: Vector Autoregression (VAR), Facebook Prophet, and Long Short-Term Memory (LSTM) neural networks in forecasting traffic flow on the I-405 Freeway, while incorporating weather data as exogenous factors. The goal is to identify the most effective model for accurate traffic prediction, leveraging the combination of historical traffic data and weather information.
 
-Get started by choosing **three potential topics**.  might be a domain you are familiar with, a particular interest you have, something that affects a community you are involved in, or an area that relates to a field you wish to work in.
+The models will be evaluated using two common performance metrics: Mean Absolute Error (MAE) and Root Mean Squared Error (RMSE). These metrics will assess their prediction accuracy and model robustness. By comparing these models, the study seeks to contribute to the development of more efficient traffic prediction systems that can assist in alleviating congestion and enhancing urban mobility in the Los Angeles area.
 
-One of the best ways to get feedback on your ideas quickly is to share them with others. That's why for Part 1 of your Capstone project, you'll share three potential topics.
+#### Data
 
-**The ultimate choice of topic for your capstone project is yours!** However, this is research and development work. Sometimes projects that look easy can be difficult and vice versa. It never hurts to have a second (or third) option available. Not sure where to start? Need some inspiration? Check out some past student capstone projects at the bottom of this README: [CLICK HERE](#example-projects)
+**Traffic flow data** is from Caltrans Performance Measurement System [(PeMS)](https://pems.dot.ca.gov/). The traffic data is collected from over 39,000 individual detectors. These sensors span the freeway system across all major metropolitan areas of the State of California. PeMs also provides over ten years of data for historical analysis. It integrates a wide variety of information from Caltrans and other local agency systems.
 
-- **Goal**: Share three potential topics and/or potential sources of data.
-- **Due**: See Google Classroom.
+In the data/traffic-data folder, it contains hourly traffic flow data for the segment of I-405 north bound in Los Angeles County from Jan. 01, 2021 to Dec. 31, 2023. Original data stores in excel files in monthly manner.
 
-<!--
-### **Capstone, Part 1.5:**
 
-In [this Google Sheet](https://docs.google.com/spreadsheets/d/1OShtZSiaWIzLOJVVRs8yEkHNLqvNa4Sps4Jj7D5OQaM/edit?usp=sharing) share your **one-sentence** problem statement **and** whether you have your dataset in hand.
-- **Due**: See Google Classroom.
--->
+**Weather data** is from [Meteostat](https://dev.meteostat.net/python/) Python package.
 
-### **[Capstone, Part 2: Problem Statement + EDA](./part_02/)**
+### 2. Data Cleaning
 
-For Part 2, provide a clear statement of the problem that you have chosen and an overview of your approach to solving that problem. Summarize your objectives, goals & success metrics, and any risks & assumptions. Outline your proposed methods and models, perform your initial EDA, and summarize the process. **Your data should be in hand by this point in the process!**
+- Identify missing values
+    - There is a 3-day gap in the timestamps.
+- Missing values imputation: 
+    - Impute the missing datat with KNN Imputer
 
-**Again, your data should be in hand by now!**
+## [Part 2: EDA](code/02-EDA.ipynb)
+---
 
-- **Goal**: Describe your proposed approach and summarize your initial EDA in a document you push to your GitHub repo.
-- **Due**: See Google Classroom.
+### 3. Exploratory Data Analysis
 
-### **[Capstone, Part 3: Progress Report + Preliminary Findings](./part_03/)**
+Resample the traffic flow data and analyze the monthly, weekly, daily and hourly traffic flow in the following parts:
 
-In Part 3, you'll create a progress report of your work to get feedback along the way. Describe your approach, initial results, and any setbacks or lessons learned so far. Your report should include updated visual and statistical analysis of your data. You’ll also meet with your instructional team to get feedback on your results so far!
+- Seasonal decomposition: plot seasonal decoposition each resampled data.
+    - weekly seasonal decomposes 
+    <img src='images/seasonal-decompose-weekly.png'>
+- Correlation: Autocorrelation and partial autocorrelation analysis.
+    - weekly acf and pacf
+    <img src='images/ACF-weekly.png'>
+- Stationarity testing: Use Augmented Dickey-Fuller unit root test to check if the data is stationary.
 
-- **Goal**: Discuss progress and setbacks, include visual and statistical analysis, in your GitHub repo.
-- **Due**: See Google Classroom.
+## [Part 3: Modeling and Conclusion](code/03-Modeling.ipynb)
+---
 
-### **[Capstone, Part 4: Report Writeup + Technical Analysis](./part_04/)**
+### 4. Modeling and Evaluation
+**Modeling**
 
-Your goal for Part 4 is to develop a technical document (in the form of Jupyter notebook) that could be shared with your peers.
+* Naive Forecast(baseline model)
+* VAR (Vector Autoregressive)
+* Prophet
+* LSTM (Long Short-Term Memory)
 
-Document your research and analysis including a summary, an explanation of your modeling approach as well as the strengths and weaknesses of any variables in the process. You should provide insight into your analysis, using best practices like cross validation or applicable prediction metrics.
+Compare the performance of each model for forecasting traffic flow on the I-405 freeway LA segment. The performance of these models is assessed based on RMSE (Root Mean Squared Error) and MAE (Mean Absolute Error), with lower values indicating better performance.
 
-- **Goal**: Detailed report and code with a summary of your statistical analysis, model, and evaluation metrics.
-- **Due**: See Google Classroom.
+**Evaluation**
 
-### **[Capstone, Part 5: Presentation + Recommendations](./part_05/)**
+**Results**
+| Time Granularity | Baseline RMSE | Baseline MAE | VAR RMSE | VAR MAE | Prophet RMSE | Prophet MAE | LSTM RMSE | LSTM MAE |
+|------------------|---------------|--------------|----------|---------|--------------|-------------|-----------|----------|
+| Monthly          | 3966.27       | 3428.63      | 510.44   | 424.80  | 2092.87      | 1666.75     | NA        | NA       |
+| Weekly           | 3966.27       | 3428.63      | 518.11   | 421.54  | 497.31       | 418.09      | 766.69    | 701.04   |
+| Daily            | 3966.27       | 3428.63      | 628.56   | 410.73  | 564.88       | 499.32      | 685.79    | 511.25   |
+| Hourly           | 3966.27       | 3428.63      | 2081.83  | 1772.04 | 601.04       | 432.05      | 1618.27   | 1228.21  |
 
-Whether during an interview or as part of a job, you will frequently have to present your findings to business partners and other interested parties - many of whom won't know anything about data science! That's why for Part 5, you'll create a presentation of your previous findings with a semi-technical audience in mind.
+The result table provides a comparison of the RMSE and MAE values for different time granularities: Monthly, Weekly, Daily, and Hourly. These time granularities are essential for traffic forecasting as they represent different levels of resolution in predicting traffic patterns.
 
-You should already have the analytical work complete, so now it's time to clean up and clarify your findings. Create a slide deck that explains your data, visualizes your model, describes your approach, articulates strengths and weaknesses, and presents specific recommendations. Be prepared to explain and defend your model to an inquisitive audience! An interactive app is a great addition to your project.
+**Baseline**
+* The baseline model is a naive forecast that uses the last value from the training set and continues it into the future.
+* This simple assumption leads to high RMSE and MAE values across all granularities, indicating poor forecasting performance.
 
-- **Goal**: Detailed presentation deck that relates your data, model, and findings to a non-technical audience.
-- **Due**: See Google Classroom.
+**VAR**
+* The VAR model performs better than the Baseline model, particularly for monthly and weekly forecasts.
+* VAR performed poorly for hourly granularities.
+* VAR model is effective for capturing longer-term trends and relationships between multiple variables in traffic data.
+* VAR struggles with high-frequency forecasting (in this study: hourly traffic flow), where traffic can be highly volatile due to factors such as accidents, road closures, or other sudden events.
 
-<a name="example-projects"></a>
-### Example Projects
+**Prophet**
+* The Prophet model shows strong performance at monthly and weekly granularities, similar to the VAR model. However, it also starts to lose accuracy as the time granularity becomes finer, particularly for daily and hourly traffic flow forecasts.
+* It performs especially well at weekly forecasts, capturing the cyclical nature of traffic patterns, which can be influenced by workweek schedules, holidays, and weather conditions.
+* While Prophet can model seasonality and holidays, it struggles when forecasting very high-frequency data (hourly), where short-term fluctuations and events (such as accidents) may be more significant.
 
-Below are some great capstone projects submitted by past DSI students!
+**LSTM**
+* It performs well at daily and weekly granularities but struggles at hourly forecasting, likely due to the complex and noisy nature of traffic flow at hourly frequency.
+* The model may overfit to short-term noise, which leads to poor performance for hourly forecasts.
+* It performs well at daily and weekly granularities, capturing daily traffic fluctuations and weekly patterns(peak hours, weekends).
+ 
+## 5. Conclusion and Recommendations
 
-* [Kenya Chauche, DSI-10](https://github.com/KenyaChauche/sonnet-generation) built a natural language generation program trained on Shakespeare's sonnets
-* [Molly Baird, DSI-11](https://github.com/mollycbaird/ComputerVisionSET) wanted to computerize the game of SET, and succeeded admirably
-* [Daniel Johnston, DSI-2](https://github.com/djkjohnston/ML_from_scratch_GA_DSI_Capstone) built several key machine learning algos from scratch in python, comparing their performance to the scikit-learn implementations.  
-* [Alex Schultz, DSI-3](https://github.com/fullquartpress/DSI-Capstone) predicts spot coffee (commodity coffee bean) price changes from sentiment analysis of an industry trade publication.  
-* [Brice Walker, DSI-3](https://github.com/bricewalker/Hey-Jetson) wanted to play with his Jetson GPU and built voice transcription _from scratch_.  
-* [Caitlin Streamer, DSI-4](https://github.com/c-streams/Pneumonia) worked on a Kaggle dataset to predict pneumonia from chest X-rays.  
-* [Brian Osgood, DSI-04](https://github.com/osgoodbl/PyFilter) built a bot that crawls twitter and identifies whether an image tagged 'lamborghini' is actually a lamborghini.  
-* [Frank Turner, DSI-04](https://github.com/frankturnerv/Fashioning_Models_from_Fashion_Models) uses image recognition to identify the colors used in a fashion season's palette.  
-* [DSI-06, team](https://github.com/balak4/Optimizing-Evac-Routes) This is actually the DSI-6 group project. It's here because it's really, really impressive.  
-* [Amy Taylor, DSI-06](https://github.com/amytaylor330/CNN_for_Dance_Music_Classification_repost) wanted to quantify the difference between types of dance music.  
-* [Veronica Giannotta, DSI-06](https://github.com/vgiannotta/Emotional-Impacts-of-Viral-Content) delved into the dark side of the internet and evaluated the emotional sentiment of social media content that goes viral.
-* [Derek Steffan, DSI-07](https://github.com/dsteffan/twitch_chat_analysis) automates the process of creating twitch highlight reels using sentiment analysis, markov chains, and Bayesian analysis.  
-* [Sebastian Alvis, League of Legends](https://github.com/salvis2/SpringboardAlvis/tree/master/capstone_project_1) Not a GA capstone, but a very compelling case for applying data science to your interests to come up with a good capstone.
+* The VAR model is effective for longer-term forecasts (monthly and weekly) but struggles with hourly forecasting, where traffic flow is more volatile and subject to external influences (e.g., accidents or road closures).
+* The Prophet model performs well for medium-term forecasting (weekly) and handles seasonality in traffic flow well, but fails to capture short-term traffic fluctuations effectively with hourly data.
+* The LSTM model shows good performance for daily and weekly forecasts, making it suitable for short and medium-term forecasting. However, it struggles with hourly forecasts, likely due to the high variability in traffic flow at such fine resolutions.
+
+**Model Selection Recommendation:**
+| **Model**    | **Suitable Granularity** |
+|--------------|----------------------|
+| **VAR**      | Monthly/Weekly       |
+| **Prophet**  | Weekly               |
+| **LSTM**     | Daily/Weekly         |
+
+* For medium-term forecasting (weekly or monthly), VAR and Prophet are suitable models. Prophet might offer better flexibility in handling seasonal patterns in traffic flow.
+* For short-term forecasting (daily), LSTM could be a good choice, but it requires tuning to avoid overfitting to short-term noise and fluctuations.
+
+**Future improvements:**
+
+There are some future steps to take this study to the next level.
+
+* Model Tuning and Optimization
+    * For LSTM, experiment with different hyperparameters: the number of layers, neurons, learning rates, and batch sizes.
+    * For Prophet, experiment with different seasonalities, changepoint.
+    * Consider using ensemble models that combine different approaches (VAR + LSTM) to leverage the strengths of each model at different granularities.
+
+* Data Enrichment
+    * Traffic events and incidents: Use historical incident data as features to improve model predictions, especially for hourly and daily data.
+
+* Spatial Data Integration
+    * Use spatial information with spatial-temporal models like spatiotemporal LSTM to capture both spatial and temporal dependencies in the data.
