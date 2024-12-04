@@ -8,7 +8,7 @@
 
 Traffic congestion on the I-405 Freeway in Los Angeles area is a significant challenge, impacting travel times, air quality, and overall commuter experience. The dynamic nature of traffic flow is influenced by numerous factors, including time of day, day of the week, special events(holidays, constructions), and weather conditions. Predicting future traffic flow accurately can enable better traffic operation management, early warnings for congestion, and optimized route planning.
 
-This study aims to compare and evaluate the performance of three prediction models: Vector Autoregression (VAR), Facebook Prophet, and Long Short-Term Memory (LSTM) neural networks in forecasting traffic flow on the I-405 Freeway, while incorporating weather data as exogenous factors. The goal is to identify the most effective model for accurate traffic prediction, leveraging the combination of historical traffic data and weather information.
+This study aims to compare and evaluate the performance of three time series models: Vector Autoregression (VAR), Facebook Prophet, and Long Short-Term Memory (LSTM) neural networks in forecasting traffic flow on the I-405 Freeway, while incorporating weather data as exogenous factors. The goal is to identify the most effective model for accurate traffic prediction, leveraging the combination of historical traffic data and weather information.
 
 The models will be evaluated using two common performance metrics: Mean Absolute Error (MAE) and Root Mean Squared Error (RMSE). These metrics will assess their prediction accuracy and model robustness. By comparing these models, the study seeks to contribute to the development of more efficient traffic prediction systems that can assist in alleviating congestion and enhancing urban mobility in the Los Angeles area.
 
@@ -85,7 +85,7 @@ The VAR model performs better than the Baseline model, particularly for monthly 
 
 **Prophet**
 
-The Prophet model shows strong performance at monthly and weekly granularities, similar to the VAR model. However, it also starts to lose accuracy as the time granularity becomes finer, particularly for daily and hourly traffic flow forecasts.
+The Prophet model shows strong performance at weekly and daily granularities. The metrics are similar to the VAR model. It also starts to lose accuracy as the time granularity becomes finer, particularly for hourly traffic flow forecasts.
 * It performs especially well at weekly forecasts, capturing the cyclical nature of traffic patterns, which can be influenced by workweek schedules, holidays, and weather conditions.
 * While Prophet can model seasonality and holidays, it struggles when forecasting very high-frequency data (hourly), where short-term fluctuations and events (such as accidents) may be more significant.
 
