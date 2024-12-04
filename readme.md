@@ -36,10 +36,10 @@ In the data/traffic-data folder, it contains hourly traffic flow data for the se
 Resample the traffic flow data and analyze the monthly, weekly, daily and hourly traffic flow in the following parts:
 
 - Seasonal decomposition: plot seasonal decoposition each resampled data.
-    - weekly seasonal decomposes 
+    - weekly seasonal decompose example for one traffic station
     <img src='images/seasonal-decompose-weekly.png'>
 - Correlation: Autocorrelation and partial autocorrelation analysis.
-    - weekly acf and pacf
+    - weekly acf and pacf example for one traffic station
     <img src='images/ACF-weekly.png'>
 - Stationarity testing: Use Augmented Dickey-Fuller unit root test to check if the data is stationary.
 
@@ -94,9 +94,9 @@ The result table provides a comparison of the RMSE and MAE values for different 
  
 ## 5. Conclusion and Recommendations
 
-* The VAR model is effective for longer-term forecasts (monthly and weekly) but struggles with hourly forecasting, where traffic flow is more volatile and subject to external influences (e.g., accidents or road closures).
-* The Prophet model performs well for medium-term forecasting (weekly) and handles seasonality in traffic flow well, but fails to capture short-term traffic fluctuations effectively with hourly data.
-* The LSTM model shows good performance for daily and weekly forecasts, making it suitable for short and medium-term forecasting. However, it struggles with hourly forecasts, likely due to the high variability in traffic flow at such fine resolutions.
+* The VAR model is effective for monthly and weekly forecasting but struggles with hourly forecasting, where traffic flow is more volatile and subject to external influences (accidents or road closures).
+* The Prophet model performs well for weekly forecast and handles seasonality in traffic flow well, but fails to capture short-term traffic fluctuations effectively with hourly data. Compare to VAR and LSTM, prophet performs better with the hourly traffic data.
+* The LSTM model shows good performance for daily forecasts. However, it struggles with hourly forecasts, likely due to the high variability in traffic flow at such fine resolutions.
 
 **Model Selection Recommendation:**
 <div align="center">
@@ -109,8 +109,8 @@ The result table provides a comparison of the RMSE and MAE values for different 
 
 </div>
 
-* For medium-term forecasting (weekly or monthly), VAR and Prophet are suitable models. Prophet might offer better flexibility in handling seasonal patterns in traffic flow.
-* For short-term forecasting (daily), LSTM could be a good choice, but it requires tuning to avoid overfitting to short-term noise and fluctuations.
+* For monthly forecast, use VAR.
+* For weekly and daily forecast, Prophet is suitable model. 
 
 **Future improvements:**
 
