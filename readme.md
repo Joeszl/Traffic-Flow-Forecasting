@@ -108,7 +108,7 @@ It performs fair at daily and weekly granularities but struggles at hourly forec
 | **Model**    | **Suitable Granularity** |
 |--------------|----------------------|
 | **VAR**      | Monthly/Weekly       |
-| **Prophet**  | Weekly               |
+| **Prophet**  | Weekly/Daily         |
 | **LSTM**     | Daily                |
 
 </div>
