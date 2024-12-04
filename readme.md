@@ -59,12 +59,16 @@ Compare the performance of each model for forecasting traffic flow on the I-405 
 **Evaluation**
 
 **Results**
+<div align="center">
+    
 | Time Granularity | Baseline RMSE | Baseline MAE | VAR RMSE | VAR MAE | Prophet RMSE | Prophet MAE | LSTM RMSE | LSTM MAE |
 |------------------|---------------|--------------|----------|---------|--------------|-------------|-----------|----------|
 | Monthly          | 3966.27       | 3428.63      | 510.44   | 424.80  | 2092.87      | 1666.75     | NA        | NA       |
 | Weekly           | 3966.27       | 3428.63      | 518.11   | 421.54  | 497.31       | 418.09      | 766.69    | 701.04   |
 | Daily            | 3966.27       | 3428.63      | 628.56   | 410.73  | 564.88       | 499.32      | 685.79    | 511.25   |
 | Hourly           | 3966.27       | 3428.63      | 2081.83  | 1772.04 | 601.04       | 432.05      | 1618.27   | 1228.21  |
+
+</div>
 
 The result table provides a comparison of the RMSE and MAE values for different time granularities: Monthly, Weekly, Daily, and Hourly. These time granularities are essential for traffic forecasting as they represent different levels of resolution in predicting traffic patterns.
 
@@ -95,11 +99,15 @@ The result table provides a comparison of the RMSE and MAE values for different 
 * The LSTM model shows good performance for daily and weekly forecasts, making it suitable for short and medium-term forecasting. However, it struggles with hourly forecasts, likely due to the high variability in traffic flow at such fine resolutions.
 
 **Model Selection Recommendation:**
+<div align="center">
+    
 | **Model**    | **Suitable Granularity** |
 |--------------|----------------------|
 | **VAR**      | Monthly/Weekly       |
 | **Prophet**  | Weekly               |
 | **LSTM**     | Daily/Weekly         |
+
+</div>
 
 * For medium-term forecasting (weekly or monthly), VAR and Prophet are suitable models. Prophet might offer better flexibility in handling seasonal patterns in traffic flow.
 * For short-term forecasting (daily), LSTM could be a good choice, but it requires tuning to avoid overfitting to short-term noise and fluctuations.
