@@ -77,20 +77,24 @@ The result table provides a comparison of the RMSE and MAE values for different 
 * This simple assumption leads to high RMSE and MAE values across all granularities, indicating poor forecasting performance.
 
 **VAR**
-* The VAR model performs better than the Baseline model, particularly for monthly and weekly forecasts.
-* VAR performed poorly for hourly granularities.
+
+The VAR model performs better than the Baseline model, particularly for monthly and weekly forecasts, but performed poorly for hourly granularities.
 * VAR model is effective for capturing longer-term trends and relationships between multiple variables in traffic data.
 * VAR struggles with high-frequency forecasting (in this study: hourly traffic flow), where traffic can be highly volatile due to factors such as accidents, road closures, or other sudden events.
+* Overall, VAR model performed best among the three models. 
 
 **Prophet**
-* The Prophet model shows strong performance at monthly and weekly granularities, similar to the VAR model. However, it also starts to lose accuracy as the time granularity becomes finer, particularly for daily and hourly traffic flow forecasts.
+
+The Prophet model shows strong performance at monthly and weekly granularities, similar to the VAR model. However, it also starts to lose accuracy as the time granularity becomes finer, particularly for daily and hourly traffic flow forecasts.
 * It performs especially well at weekly forecasts, capturing the cyclical nature of traffic patterns, which can be influenced by workweek schedules, holidays, and weather conditions.
 * While Prophet can model seasonality and holidays, it struggles when forecasting very high-frequency data (hourly), where short-term fluctuations and events (such as accidents) may be more significant.
 
 **LSTM**
-* It performs well at daily and weekly granularities but struggles at hourly forecasting, likely due to the complex and noisy nature of traffic flow at hourly frequency.
+
+It performs fair at daily and weekly granularities but struggles at hourly forecasting, likely due to the complex and noisy nature of traffic flow at hourly frequency.
 * The model may overfit to short-term noise, which leads to poor performance for hourly forecasts.
 * It performs well at daily and weekly granularities, capturing daily traffic fluctuations and weekly patterns(peak hours, weekends).
+
  
 ## 5. Conclusion and Recommendations
 
@@ -105,7 +109,7 @@ The result table provides a comparison of the RMSE and MAE values for different 
 |--------------|----------------------|
 | **VAR**      | Monthly/Weekly       |
 | **Prophet**  | Weekly               |
-| **LSTM**     | Daily/Weekly         |
+| **LSTM**     | Daily                |
 
 </div>
 
